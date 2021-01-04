@@ -123,6 +123,10 @@ defmodule ArangoXEcto.Adapter do
   defdelegate execute(adapter_meta, query_meta, query_cache, params, options),
     to: ArangoXEcto.Behaviour.Queryable
 
+  def execute_ddl(adapter_meta, query_meta, query_cache) do
+    execute(adapter_meta, query_meta, query_cache, [], [])
+  end
+
   @behaviour Ecto.Adapter.Schema
   defdelegate delete(adapter_meta, schema_meta, filters, options),
     to: ArangoXEcto.Behaviour.Schema
