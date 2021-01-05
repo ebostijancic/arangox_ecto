@@ -124,7 +124,13 @@ defmodule ArangoXEcto.Adapter do
     to: ArangoXEcto.Behaviour.Queryable
 
   def execute_ddl(adapter_meta, query_meta, query_cache) do
-    execute(adapter_meta, query_meta, query_cache, [], [])
+    Logger.warn("Ignoring execute_ddl execution")
+    []
+  end
+
+  def lock_for_migrations(arg1, arg2, arg3, arg4) do
+    Logger.warn("Ignoring lock_form_migrations execution")
+    []
   end
 
   @behaviour Ecto.Adapter.Schema
