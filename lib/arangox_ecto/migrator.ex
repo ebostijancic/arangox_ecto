@@ -263,7 +263,7 @@ defmodule ArangoXEcto.Migrator do
       |> Macro.underscore()
 
       #"./priv/repo"
-    Path.join([priv_dir, repo_underscore])
+    Path.join([Application.app_dir(:otp_app), priv_dir, repo_underscore])
   end
 
   @doc false
