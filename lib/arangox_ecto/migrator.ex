@@ -254,7 +254,16 @@ defmodule ArangoXEcto.Migrator do
   @doc false
   def path_to_priv_repo(repo) do
     app = Keyword.fetch!(repo.config(), :otp_app)
-    "priv/repo"
+    priv_dir = "#{:code.priv_dir(app)}"
+
+    repo_underscore =
+      repo
+      |> Module.split()
+      |> List.last()
+      |> Macro.underscore()
+
+      #"./priv/repo"
+    Path.join([priv_dir, repo_underscore])
   end
 
   @doc false
