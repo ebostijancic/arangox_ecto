@@ -123,15 +123,15 @@ defmodule ArangoXEcto.Adapter do
   defdelegate execute(adapter_meta, query_meta, query_cache, params, options),
     to: ArangoXEcto.Behaviour.Queryable
 
-  def execute_ddl(adapter_meta, query_meta, query_cache) do
-    Logger.warn("Ignoring execute_ddl execution")
-    []
-  end
+  # def execute_ddl(adapter_meta, query_meta, query_cache) do
+  #   Logger.warn("Ignoring execute_ddl execution")
+  #   {:ok, []}
+  # end
 
-  def lock_for_migrations(arg1, arg2, arg3, arg4) do
-    Logger.warn("Ignoring lock_form_migrations execution")
-    []
-  end
+  # def lock_for_migrations(adapter_meta, arg2, options, fun) do
+  #   Logger.warn("Ignoring lock_form_migrations execution")
+  #   :ok
+  # end
 
   @behaviour Ecto.Adapter.Schema
   defdelegate delete(adapter_meta, schema_meta, filters, options),

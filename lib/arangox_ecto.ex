@@ -389,7 +389,7 @@ defmodule ArangoXEcto do
 
     Arangox.get(conn, "/_api/collection/#{collection_name}")
     |> case do
-      {:ok, _request, %Arangox.Response{body: %{"type" => ^int_type, "isSystem" => false}}} ->
+      {:ok, %Arangox.Response{body: %{"type" => ^int_type, "isSystem" => false}}} ->
         true
 
       _any ->

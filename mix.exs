@@ -37,7 +37,7 @@ defmodule ArangoXEcto.MixProject do
   defp deps do
     [
       ecto_dep(),
-      {:arangox, "~> 0.4.0"},
+      {:arangox, "~> 0.5.4"},
       {:velocy, "~> 0.1"},
       {:jason, "~> 1.2"},
       {:ex_doc, "~> 0.22.6", only: :dev, runtime: false},
