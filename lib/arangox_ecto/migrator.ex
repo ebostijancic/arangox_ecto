@@ -1,11 +1,17 @@
 defmodule ArangoXEcto.Migrator do
+  @moduledoc false
+
   require Logger
   require Ecto.Query
+
+  alias ArangoXEcto.RepoConfig
 
   @migrations_collection "_migrations"
   @master_document "MASTER"
 
   def migrate(repo, args) do
+    RepoConfig.start_link(repo)
+
     case OptionParser.parse!(args, aliases: @aliases, strict: @switches) do
       {[], []} ->
         up(repo)
@@ -160,7 +166,6 @@ defmodule ArangoXEcto.Migrator do
 
       {:error, %Arangox.Error{status: 404}} ->
         Logger.debug("Migration document not found, creating")
-        # TODO migrate existing migration from legacy
         legacy_versions = copy_legacy_migration(repo, migration_versions.migrations)
         Arangox.post!(conn, document, migration_versions)
 
@@ -262,7 +267,6 @@ defmodule ArangoXEcto.Migrator do
       |> List.last()
       |> Macro.underscore()
 
-      #"./priv/repo"
     Path.join([priv_dir, repo_underscore])
   end
 
