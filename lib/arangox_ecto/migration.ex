@@ -208,22 +208,10 @@ defmodule ArangoXEcto.Migration do
     end
   end
 
-  defp get_db_conn do
-    config(pool_size: 1)
+  defp get_db_conn() do
+    repo_config = ArangoXEcto.RepoConfig.config()
+    Keyword.merge(repo_config, pool_size: 1)
     |> Arangox.start_link()
-  end
-
-  defp get_default_repo! do
-    case Mix.Ecto.parse_repo([])
-         |> List.first() do
-      nil -> raise "No Default Repo Found"
-      repo -> repo
-    end
-  end
-
-  defp config(opts) do
-    get_default_repo!().config()
-    |> Keyword.merge(opts)
   end
 
   defp collection_type(:document), do: 2

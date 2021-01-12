@@ -2,10 +2,14 @@ defmodule ArangoXEcto.Migrator do
   require Logger
   require Ecto.Query
 
+  alias ArangoXEcto.RepoConfig
+
   @migrations_collection "_migrations"
   @master_document "MASTER"
 
   def migrate(repo, args) do
+    RepoConfig.start_link(repo)
+
     case OptionParser.parse!(args, aliases: @aliases, strict: @switches) do
       {[], []} ->
         up(repo)
@@ -262,13 +266,26 @@ defmodule ArangoXEcto.Migrator do
       |> List.last()
       |> Macro.underscore()
 
-      #"./priv/repo"
-    Path.join([Application.app_dir(app), priv_dir, repo_underscore])
+    Path.join([priv_dir, repo_underscore])
   end
 
   @doc false
   def timestamp do
     {{y, m, d}, {hh, mm, ss}} = :calendar.universal_time()
     "#{y}#{pad(m)}#{pad(d)}#{pad(hh)}#{pad(mm)}#{pad(ss)}"
+  end
+end
+
+defmodule ArangoXEcto.RepoConfig do
+  @doc false
+
+  use Agent
+
+  def start_link(repo) do
+    Agent.start_link(fn -> repo.config() end, name: __MODULE__)
+  end
+
+  def config do
+    Agent.get(__MODULE__, & &1)
   end
 end
