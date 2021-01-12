@@ -1,8 +1,8 @@
 defmodule ArangoXEctoMigratorTest do
   use ExUnit.Case
 
-  alias ArangoXEctoTest.Repo
   alias ArangoXEcto.Migrator
+  alias ArangoXEctoTest.Repo
 
   @collection "_migrations_test"
 

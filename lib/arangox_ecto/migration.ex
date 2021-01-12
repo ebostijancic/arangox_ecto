@@ -208,7 +208,7 @@ defmodule ArangoXEcto.Migration do
     end
   end
 
-  defp get_db_conn() do
+  defp get_db_conn do
     repo_config = ArangoXEcto.RepoConfig.config()
     Keyword.merge(repo_config, pool_size: 1)
     |> Arangox.start_link()

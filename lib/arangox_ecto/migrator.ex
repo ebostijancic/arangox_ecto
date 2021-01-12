@@ -1,4 +1,6 @@
 defmodule ArangoXEcto.Migrator do
+  @moduledoc false
+
   require Logger
   require Ecto.Query
 
@@ -164,7 +166,6 @@ defmodule ArangoXEcto.Migrator do
 
       {:error, %Arangox.Error{status: 404}} ->
         Logger.debug("Migration document not found, creating")
-        # TODO migrate existing migration from legacy
         legacy_versions = copy_legacy_migration(repo, migration_versions.migrations)
         Arangox.post!(conn, document, migration_versions)
 
@@ -273,19 +274,5 @@ defmodule ArangoXEcto.Migrator do
   def timestamp do
     {{y, m, d}, {hh, mm, ss}} = :calendar.universal_time()
     "#{y}#{pad(m)}#{pad(d)}#{pad(hh)}#{pad(mm)}#{pad(ss)}"
-  end
-end
-
-defmodule ArangoXEcto.RepoConfig do
-  @doc false
-
-  use Agent
-
-  def start_link(repo) do
-    Agent.start_link(fn -> repo.config() end, name: __MODULE__)
-  end
-
-  def config do
-    Agent.get(__MODULE__, & &1)
   end
 end

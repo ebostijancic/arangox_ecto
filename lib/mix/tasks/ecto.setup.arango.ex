@@ -25,6 +25,4 @@ defmodule Mix.Tasks.Ecto.Setup.Arango do
         Mix.shell().info("ArangoDB already setup for ecto")
     end
   end
-
-
 end
