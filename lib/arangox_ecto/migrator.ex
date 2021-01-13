@@ -276,3 +276,15 @@ defmodule ArangoXEcto.Migrator do
     "#{y}#{pad(m)}#{pad(d)}#{pad(hh)}#{pad(mm)}#{pad(ss)}"
   end
 end
+
+defmodule ArangoXEcto.RepoConfig do
+  use Agent
+
+  def start_link(repo) do
+    Agent.start_link(fn -> repo.config() end, name: __MODULE__)
+  end
+
+  def config do
+    Agent.get(__MODULE__, & &1)
+  end
+end
